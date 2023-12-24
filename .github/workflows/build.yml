@@ -4,66 +4,66 @@ on:
   push:
     branches:
       - master
-  release:
-    types: [created]
+    tags:
+      - 'v*'
 
 jobs:
   build:
     runs-on: windows-latest
     steps:
-    - name: Check out code
-      uses: actions/checkout@v4.0.0
+      - name: Check out code
+        uses: actions/checkout@v4.0.0
 
-    - name: Set up Python
-      uses: actions/setup-python@v5.0.0
-      with:
-        python-version: '3.11'
+      - name: Set up Python
+        uses: actions/setup-python@v5.0.0
+        with:
+          python-version: '3.11'
 
-    - name: Install dependencies
-      run: |
-        pip install -r requirements.txt
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
 
-    - name: Build the application
-      run: pyinstaller -F -i lgfavicon.ico main.py
+      - name: Build the application
+        run: pyinstaller -F -i lgfavicon.ico main.py
 
-    - name: Zip the application
-      run: |
-        Compress-Archive -Path ./dist/* -DestinationPath LuoguMsgNotifier.zip
+      - name: Zip the application
+        run: |
+          Compress-Archive -Path ./dist/* -DestinationPath LuoguMsgNotifier.zip
 
-    - name: Upload artifact
-      uses: actions/upload-artifact@v4.0.0
-      with:
-        name: LuoguMsgNotifier
-        path: LuoguMsgNotifier.zip
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4.0.0
+        with:
+          name: LuoguMsgNotifier
+          path: LuoguMsgNotifier.zip
 
   release:
     needs: build
+    if: startsWith(github.ref, 'refs/tags/')
     runs-on: ubuntu-latest
     steps:
-    - name: Download artifact
-      uses: actions/download-artifact@v4.0.0
-      with:
-        name: LuoguMsgNotifier
+      - name: Download artifact
+        uses: actions/download-artifact@v4.0.0
+        with:
+          name: LuoguMsgNotifier
 
-    - name: Create Release
-      id: create_release
-      uses: actions/create-release@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        tag_name: ${{ github.ref }}
-        release_name: Release ${{ github.ref }}
-        draft: false
-        prerelease: false
-        body: ""
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref_name }}
+          release_name: Release ${{ github.ref_name }}
+          draft: false
+          prerelease: false
+          body: "Release description goes here."
 
-    - name: Upload Release Asset
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./LuoguMsgNotifier.zip
-        asset_name: LuoguMsgNotifier.zip
-        asset_content_type: application/zip
-
+      - name: Upload Release Asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./LuoguMsgNotifier.zip
+          asset_name: LuoguMsgNotifier.zip
+          asset_content_type: application/zip
