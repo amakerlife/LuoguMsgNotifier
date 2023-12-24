@@ -28,6 +28,7 @@ jobs:
 
       - name: Zip the application
         run: |
+          rename ./dist/main.exe LuoguMsgNotifier.exe
           Compress-Archive -Path ./dist/* -DestinationPath LuoguMsgNotifier.zip
 
       - name: Upload artifact
