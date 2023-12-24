@@ -1,0 +1,2 @@
+websocket_client==1.7.0
+win11toast==0.34
