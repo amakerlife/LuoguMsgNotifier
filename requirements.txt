@@ -1,2 +1,10 @@
-websocket_client==1.7.0
+altgraph==0.17.4
+packaging==23.2
+pefile==2023.2.7
+pyinstall==0.1.4
+pyinstaller==6.3.0
+pyinstaller-hooks-contrib==2023.11
+pywin32-ctypes==0.2.2
+websocket-client==1.7.0
 win11toast==0.34
+winsdk==1.0.0b10
