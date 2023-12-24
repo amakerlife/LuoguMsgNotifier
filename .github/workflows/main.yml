@@ -3,13 +3,13 @@ name: Build and Release
 on:
   push:
     branches:
-      - master  # 或者你用于发布的分支
+      - master
   release:
     types: [created]
 
 jobs:
   build:
-    runs-on: windows-latest  # 或者其他你的项目需要的操作系统
+    runs-on: windows-latest
     steps:
     - name: Check out code
       uses: actions/checkout@v4.0.0
@@ -17,7 +17,7 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v5.0.0
       with:
-        python-version: '3.11'  # 选择你需要的Python版本
+        python-version: '3.11'
 
     - name: Install dependencies
       run: |
@@ -56,4 +56,14 @@ jobs:
         draft: false
         prerelease: false
         body: ""
-        files: LuoguMsgNotifier.zip
+
+    - name: Upload Release Asset
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./LuoguMsgNotifier.zip
+        asset_name: LuoguMsgNotifier.zip
+        asset_content_type: application/zip
+
