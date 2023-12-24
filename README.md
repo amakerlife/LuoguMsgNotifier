@@ -1,4 +1,4 @@
-<h1 align="center">- Wor -</h1>
+<h1 align="center">- LuoguMsgNotifier -</h1>
 
 <p align="center">
 <img src="https://img.shields.io/github/v/release/amakerlife/LuoguMsgNotifier.svg">
