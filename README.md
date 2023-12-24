@@ -14,4 +14,13 @@
 
 ## 使用方法
 
-在项目根目录下创建 `cookie.txt` 文件，以 `_uid __client_id` 的形式写入 cookie。完成后运行程序即可。
+下载 [最新版 Release](https://github.com/amakerlife/LuoguMsgNotifier/releases/latest)，解压缩后在 exe 所在目录下创建 `cookie.txt` 文件，以 `_uid __client_id` 的形式写入 cookie。完成后运行程序即可。
+
+## 自行打包
+
+```bash
+git clone https://github.com/amakerlife/LuoguMsgNotifier
+cd LuoguMsgNotifier
+pip install -r requirements.txt
+pyinstaller -F -i lgfavicon.ico main.py
+```

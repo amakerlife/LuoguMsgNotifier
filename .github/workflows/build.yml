@@ -56,7 +56,7 @@ jobs:
           release_name: Release ${{ github.ref_name }}
           draft: false
           prerelease: false
-          body: "Release description goes here."
+          body: ""
 
       - name: Upload Release Asset
         uses: actions/upload-release-asset@v1
