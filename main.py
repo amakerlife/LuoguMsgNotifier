@@ -27,22 +27,18 @@ def on_message(ws, message):
         msg = data['message']
         # 打印消息内容
         print(f"{msg['sender']['name']} → {msg['receiver']['name']}: {msg['content']}")
-        button = {
+        button_open = {
             'activationType': 'protocol',
             'arguments': f"https://www.luogu.com.cn/chat?uid={msg['sender']['uid']}",
             'content': '查看私信'
         }
-        image = {
-            'src': f"https://cdn.luogu.com.cn/upload/usericon/{msg['sender']['uid']}.png",
-            'placement': 'hero'
-        }
         # 发送桌面通知
-        toast('收到新的私信', f"{msg['sender']['name']}: {msg['content']}",
+        toast('收到新洛谷的私信', f"{msg['sender']['name']}: {msg['content']}",
               duration='short',
-              # image=image,
-              button=button,
+              icon=f"https://cdn.luogu.com.cn/upload/usericon/{msg['sender']['uid']}.png",
+              buttons=[button_open, '忽略'],
               audio={'silent': 'true'})
-
+        print(f"https://cdn.luogu.com.cn/upload/usericon/{msg['sender']['uid']}.png")
 
 if __name__ == "__main__":
     ws_url = "wss://ws.luogu.com.cn/ws"
