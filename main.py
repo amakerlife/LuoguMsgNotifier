@@ -33,9 +33,9 @@ def on_message(ws, message):
             "content": "查看私信"
         }
         # 发送桌面通知
-        toast("收到新洛谷的私信", f'{msg["sender"]["name"]}: {msg["content"]}',
+        toast("收到新的洛谷私信", f'{msg["sender"]["name"]}: {msg["content"]}',
               duration="short",
-              icon=f'https://cdn.luogu.com.cn/upload/usericon/{msg["sender"]["uid"]}.png',
+              #icon=f'https://cdn.luogu.com.cn/upload/usericon/{msg["sender"]["uid"]}.png',
               buttons=[button_open, "忽略"],
               audio={"silent": "true"})
         print(f'https://cdn.luogu.com.cn/upload/usericon/{msg["sender"]["uid"]}.png')
