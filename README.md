@@ -5,7 +5,7 @@
 <img src="https://img.shields.io/github/license/amakerlife/LuoguMsgNotifier" alt="License" />
 <img src="https://img.shields.io/github/last-commit/amakerlife/LuoguMsgNotifier">
 <img src="https://img.shields.io/github/downloads/amakerlife/LuoguMsgNotifier/total?label=Release%20Downloads">
-<img src="https://img.shields.io/badge/support-Windows-blue?logo=Windows 10+">
+<img src="https://img.shields.io/badge/support-Windows-blue?logo=Windows 10">
 </p>
 
 在 Windows 上通知洛谷私信。
