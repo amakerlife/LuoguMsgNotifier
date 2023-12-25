@@ -24,3 +24,7 @@ cd LuoguMsgNotifier
 pip install -r requirements.txt
 pyinstaller -F -i lgfavicon.ico main.py
 ```
+
+## 展示
+
+![](https://img.makerlife.top/data/202312252050537.png)
