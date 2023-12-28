@@ -14,9 +14,13 @@ cnt_reconnect = 0
 MAX_RECONNECTS = 5
 
 
+def print_msg(msg):
+    print(f'{int(time.time() - st)} {msg}')
+
+
 def on_open(ws):
     global cnt_reconnect
-    print("连接成功")
+    print_msg("连接成功")
     cnt_reconnect = 0
     data = json.dumps({
         "channel": "chat",
@@ -27,15 +31,14 @@ def on_open(ws):
 
 
 def on_close(ws, close_status_code, close_msg):
-    print("连接已被关闭")
+    print_msg("连接已被关闭")
 
 
 def on_message(ws, message):
     data = json.loads(message)
-    print(data["message"])
     if data.get("_ws_type") == "server_broadcast":
         msg = data["message"]
-        print(f'{msg["sender"]["name"]} → {msg["receiver"]["name"]}: {msg["content"]}')
+        print_msg(f'{msg["sender"]["name"]} → {msg["receiver"]["name"]}: {msg["content"]}')
         button_open = {
             "activationType": "protocol",
             "arguments": f'https://www.luogu.com.cn/chat?uid={msg["sender"]["uid"]}',
@@ -63,14 +66,15 @@ def connect():
         except:
             pass
         cnt_reconnect += 1
-        print("连接已被关闭")
-        print(f'正在尝试重连（{cnt_reconnect}/{MAX_RECONNECTS}）')
+        # print_msg("连接已被关闭")
+        print_msg(f'正在尝试重连（{cnt_reconnect}/{MAX_RECONNECTS}）')
         time.sleep(5)
         if cnt_reconnect >= MAX_RECONNECTS:
-            print("连接超时")
+            print_msg("连接超时")
             toast("连接超时")
             break
 
 
 if __name__ == "__main__":
+    st = time.time()
     connect()
