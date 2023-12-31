@@ -39,16 +39,17 @@ def on_message(ws, message):
     if data.get("_ws_type") == "server_broadcast":
         msg = data["message"]
         print_msg(f'{msg["sender"]["name"]} → {msg["receiver"]["name"]}: {msg["content"]}')
-        button_open = {
-            "activationType": "protocol",
-            "arguments": f'https://www.luogu.com.cn/chat?uid={msg["sender"]["uid"]}',
-            "content": "查看私信"
-        }
-        toast("收到新的洛谷私信", f'{msg["sender"]["name"]}: {msg["content"]}',
-              duration="short",
-              # icon=f'https://cdn.luogu.com.cn/upload/usericon/{msg["sender"]["uid"]}.png',
-              buttons=[button_open, "忽略"],
-              audio={"silent": "true"})
+        if str(msg["sender"]["uid"]) != str(_uid):
+            button_open = {
+                "activationType": "protocol",
+                "arguments": f'https://www.luogu.com.cn/chat?uid={msg["sender"]["uid"]}',
+                "content": "查看私信"
+            }
+            toast("收到新的洛谷私信", f'{msg["sender"]["name"]}: {msg["content"]}',
+                  duration="short",
+                  # icon=f'https://cdn.luogu.com.cn/upload/usericon/{msg["sender"]["uid"]}.png',
+                  buttons=[button_open, "忽略"],
+                  audio={"silent": "true"})
 
 
 def connect():
