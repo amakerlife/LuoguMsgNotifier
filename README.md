@@ -14,7 +14,7 @@
 
 ## 使用方法
 
-下载 [最新版 Release](https://github.com/amakerlife/LuoguMsgNotifier/releases/latest)，解压缩后在 exe 所在目录下创建 `cookie.txt` 文件，以 `_uid __client_id` 的形式写入 cookie。完成后运行程序即可。
+下载 [最新版 Release](https://github.com/amakerlife/LuoguMsgNotifier/releases/latest)，解压缩后在 exe 所在目录下创建 `cookie.txt` 文件，以 `_uid __client_id __user_name` 的形式写入 cookie 和用户名。完成后运行程序即可。
 
 由于一些原因，**不保证对 Windows10 早期版本的支持**。
 

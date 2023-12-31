@@ -4,7 +4,11 @@ from win11toast import toast
 import time
 
 with open("cookie.txt", "r") as file:
-    _uid, __client_id = file.read().strip().split()
+    tmp = file.read()
+    list = tmp.split()
+    _uid = list[0]
+    __client_id = list[1]
+    __user_name = list[2]
 
 headers = {
     "Cookie": f"_uid={_uid}; __client_id={__client_id}"
@@ -44,11 +48,12 @@ def on_message(ws, message):
             "arguments": f'https://www.luogu.com.cn/chat?uid={msg["sender"]["uid"]}',
             "content": "查看私信"
         }
-        toast("收到新的洛谷私信", f'{msg["sender"]["name"]}: {msg["content"]}',
-              duration="short",
-              # icon=f'https://cdn.luogu.com.cn/upload/usericon/{msg["sender"]["uid"]}.png',
-              buttons=[button_open, "忽略"],
-              audio={"silent": "true"})
+        if f'{msg["sender"]["name"]}' != __user_name:
+            toast("收到新的洛谷私信", f'{msg["sender"]["name"]}: {msg["content"]}',
+                  duration="short",
+                  # icon=f'https://cdn.luogu.com.cn/upload/usericon/{msg["sender"]["uid"]}.png',
+                  buttons=[button_open, "忽略"],
+                  audio={"silent": "true"})
 
 
 def connect():
