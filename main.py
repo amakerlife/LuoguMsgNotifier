@@ -1,7 +1,11 @@
 import json
+import time
 import websocket
 from win11toast import toast
-import time
+import logging
+
+logging.basicConfig(level=logging.INFO,
+                    format='%(asctime)s - %(levelname)s: %(message)s')
 
 with open("cookie.txt", "r") as file:
     _uid, __client_id = file.read().strip().split()
@@ -14,13 +18,9 @@ cnt_reconnect = 0
 MAX_RECONNECTS = 5
 
 
-def print_msg(msg):
-    print(f'{int(time.time() - st)} {msg}')
-
-
 def on_open(ws):
     global cnt_reconnect
-    print_msg("连接成功")
+    logging.info("连接成功")
     cnt_reconnect = 0
     data = json.dumps({
         "channel": "chat",
@@ -31,14 +31,14 @@ def on_open(ws):
 
 
 def on_close(ws, close_status_code, close_msg):
-    print_msg("连接已被关闭")
+    logging.warning("连接已被关闭")
 
 
 def on_message(ws, message):
     data = json.loads(message)
     if data.get("_ws_type") == "server_broadcast":
         msg = data["message"]
-        print_msg(f'{msg["sender"]["name"]} → {msg["receiver"]["name"]}: {msg["content"]}')
+        logging.info(f'{msg["sender"]["name"]} → {msg["receiver"]["name"]}: {msg["content"]}')
         if str(msg["sender"]["uid"]) != str(_uid):
             button_open = {
                 "activationType": "protocol",
@@ -68,10 +68,10 @@ def connect():
             pass
         cnt_reconnect += 1
         # print_msg("连接已被关闭")
-        print_msg(f'正在尝试重连（{cnt_reconnect}/{MAX_RECONNECTS}）')
+        logging.info(f'正在尝试重连（{cnt_reconnect}/{MAX_RECONNECTS}）')
         time.sleep(5)
         if cnt_reconnect >= MAX_RECONNECTS:
-            print_msg("连接超时")
+            logging.error("连接超时")
             toast("连接超时")
             break
 
